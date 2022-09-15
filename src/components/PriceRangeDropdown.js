@@ -32,10 +32,10 @@ const PriceRangeDropdown = () => {
       value: "190000 - 220000",
     },
     {
-      value: "20000 - 30000",
+      value: "200000 - 300000",
     },
     {
-      value: "30000 - 40000",
+      value: "300000 - 400000",
     },
   ];
 
@@ -47,8 +47,8 @@ const PriceRangeDropdown = () => {
       >
         <RiWallet3Line className="dropdown-icon-primary" />
         <div>
-          <div className="text-[15px] font-medium leading-tight">{price}</div>
-          <div className="text-[13px]">Choose price range</div>
+          <div className="text-[14px] font-medium leading-tight">{price}</div>
+          <div className="text-[11px]">Choose price range</div>
         </div>
         {isOpen ? (
           <RiArrowUpSLine className="dropdown-icon-secondary" />

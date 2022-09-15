@@ -15,8 +15,7 @@ const HouseContextProvider = ({ children }) => {
   const [properties, setProperties] = useState([]);
   const [price, setPrice] = useState("Price range (any)");
   const [loading, setLoading] = useState(false);
-  const [month, setMonth] = useState("When(any)");
-  // const [wheni, setwheni] = useState([]);
+  const [month, setMonth] = useState("When (any)");
 
   useEffect(() => {
     // return all countries
@@ -44,17 +43,6 @@ const HouseContextProvider = ({ children }) => {
     setProperties(uniqueProperties);
   }, []);
 
-  useEffect(() => {
-    // return only countries
-    const allMonths = houses.map((house) => {
-      return house.month;
-    });
-    // remove duplicates
-    const uniqueProperties = ["Choose(any)", ...new Set(allMonths)];
-    // set countries state
-    setMonth(uniqueProperties);
-  }, []);
-
   const handleClick = () => {
     setLoading(true);
     // check the string if includes '(any)'
@@ -74,7 +62,8 @@ const HouseContextProvider = ({ children }) => {
         house.country === country &&
         house.type === property &&
         housePrice >= minPrice &&
-        housePrice <= maxPrice
+        housePrice <= maxPrice &&
+        house.month == month
       ) {
         return house;
       }
@@ -88,33 +77,172 @@ const HouseContextProvider = ({ children }) => {
         return house;
       }
       // country is not default
-      if (!isDefault(country) && isDefault(property) && isDefault(price)) {
+      if (
+        !isDefault(country) &&
+        isDefault(property) &&
+        isDefault(price) &&
+        isDefault(month)
+      ) {
         return house.country === country;
       }
       // property is not default
-      if (!isDefault(property) && isDefault(country) && isDefault(price)) {
+      if (
+        !isDefault(property) &&
+        isDefault(country) &&
+        isDefault(price) &&
+        isDefault(month)
+      ) {
         return house.type === property;
       }
       // price is not default
-      if (!isDefault(price) && isDefault(country) && isDefault(property)) {
+      if (
+        !isDefault(price) &&
+        isDefault(country) &&
+        isDefault(property) &&
+        isDefault(month)
+      ) {
         if (housePrice >= minPrice && housePrice <= maxPrice) {
           return house;
         }
       }
+      // month is not default
+      if (
+        !isDefault(month) &&
+        isDefault(property) &&
+        isDefault(country) &&
+        isDefault(price)
+      ) {
+        return house.month === month;
+      }
       // country and property is not default
-      if (!isDefault(country) && !isDefault(property) && isDefault(price)) {
+      if (
+        !isDefault(country) &&
+        !isDefault(property) &&
+        isDefault(price) &&
+        isDefault(month)
+      ) {
         return house.country === country && house.type === property;
       }
       // country and price is not default
-      if (!isDefault(country) && isDefault(property) && !isDefault(price)) {
+      if (
+        !isDefault(country) &&
+        isDefault(property) &&
+        !isDefault(price) &&
+        isDefault(month)
+      ) {
         if (housePrice >= minPrice && housePrice <= maxPrice) {
           return house.country === country;
         }
+      }
+      // country and month is not default
+      if (
+        !isDefault(country) &&
+        !isDefault(month) &&
+        isDefault(price) &&
+        isDefault(property)
+      ) {
+        return house.country === country && house.month === month;
       }
       // property and price is not default
       if (isDefault(country) && !isDefault(property) && !isDefault(price)) {
         if (housePrice >= minPrice && housePrice <= maxPrice) {
           return house.type === property;
+        }
+      }
+      // property and month is not default
+      if (
+        !isDefault(property) &&
+        !isDefault(month) &&
+        isDefault(price) &&
+        isDefault(country)
+      ) {
+        return house.type === property && house.month === month;
+      }
+      // price and month is not default
+      if (
+        isDefault(country) &&
+        isDefault(property) &&
+        !isDefault(price) &&
+        !isDefault(month)
+      ) {
+        if (housePrice >= minPrice && housePrice <= maxPrice) {
+          return house.month === month;
+        }
+      }
+      //one(country) is default
+      if (
+        isDefault(country) &&
+        !isDefault(property) &&
+        !isDefault(price) &&
+        !isDefault(month)
+      ) {
+        if (housePrice >= minPrice && housePrice <= maxPrice) {
+          return house.month === month && house.type === property;
+        }
+      }
+      //one(price) is default
+      if (
+        !isDefault(country) &&
+        !isDefault(property) &&
+        isDefault(price) &&
+        !isDefault(month)
+      ) {
+        return (
+          house.month === month &&
+          house.type === property &&
+          house.country === country
+        );
+      }
+      // one(property) is default
+      if (
+        !isDefault(country) &&
+        isDefault(property) &&
+        !isDefault(price) &&
+        !isDefault(month)
+      ) {
+        if (housePrice >= minPrice && housePrice <= maxPrice) {
+          return house.month === month && house.country === country;
+        }
+      }
+      // month is default
+      if (
+        !isDefault(country) &&
+        !isDefault(property) &&
+        !isDefault(price) &&
+        isDefault(month)
+      ) {
+        if (housePrice >= minPrice && housePrice <= maxPrice) {
+          return house.type === property && house.country === country;
+        }
+      }
+      // all are is not default
+      if (
+        !isDefault(country) &&
+        !isDefault(property) &&
+        !isDefault(price) &&
+        !isDefault(month)
+      ) {
+        if (housePrice >= minPrice && housePrice <= maxPrice) {
+          return (
+            house.month === month &&
+            house.type === property &&
+            house.country === country
+          );
+        }
+      }
+      // all are is not default
+      if (
+        !isDefault(country) &&
+        !isDefault(property) &&
+        !isDefault(price) &&
+        !isDefault(month)
+      ) {
+        if (housePrice >= minPrice && housePrice <= maxPrice) {
+          return (
+            house.month === month &&
+            house.type === property &&
+            house.country === country
+          );
         }
       }
     });
@@ -143,7 +271,6 @@ const HouseContextProvider = ({ children }) => {
         loading,
         month,
         setMonth,
-        // setwheni,
       }}
     >
       {children}

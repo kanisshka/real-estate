@@ -17,8 +17,8 @@ const CountryDropdown = () => {
       >
         <RiMapPinLine className="dropdown-icon-primary" />
         <div>
-          <div className="text-[15px] font-medium leading-tight">{country}</div>
-          <div className="text-[13px]">Select your place</div>
+          <div className="text-[14px] font-medium leading-tight">{country}</div>
+          <div className="text-[11px]">Select your place</div>
         </div>
         {isOpen ? (
           <RiArrowUpSLine className="dropdown-icon-secondary" />
